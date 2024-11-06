@@ -30,17 +30,47 @@ const buttons = [
 ];
 
 const update = (btnValue) => {
+  display.value = String(display.value);
   if (btnValue === "AC") {
     return (display.value = "");
   }
 
   if (btnValue === "DEL") {
-    display.value = String(display.value);
     return (display.value = display.value.slice(0, -1));
   }
 
   if (btnValue === "=") {
     return (display.value = eval(display.value));
+  }
+
+  if (
+    btnValue === "*" ||
+    btnValue === "." ||
+    btnValue === "+" ||
+    btnValue === "-" ||
+    btnValue === "/"
+  ) {
+    if (
+      display.value.substr(display.value.length - 1) === "*" ||
+      display.value.substr(display.value.length - 1) === "." ||
+      display.value.substr(display.value.length - 1) === "+" ||
+      display.value.substr(display.value.length - 1) === "-" ||
+      display.value.substr(display.value.length - 1) === "/"
+    ) {
+      return;
+    }
+    if (display.value === "") {
+      return;
+    }
+  }
+  if (
+    btnValue === "." &&
+    display.value
+      .split(/[*|/|-|+]/)
+      .pop()
+      .includes(".")
+  ) {
+    return;
   }
 
   display.value += btnValue;
